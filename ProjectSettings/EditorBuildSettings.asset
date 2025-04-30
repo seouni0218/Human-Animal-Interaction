@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/self-disclosure content/preparation.unity
+    guid: 7f010c0aae74aab4a9fac0c1755fafca
+  - enabled: 0
+    path: Assets/Scenes/self-disclosure content/human_noninteraction.unity
+    guid: a1a83a0de207745499d9b4c088e6548f
+  - enabled: 0
+    path: Assets/Scenes/self-disclosure content/cat_noninteraction.unity
+    guid: 13965b58d38f22c43b1e6b88a887029c
+  - enabled: 0
+    path: Assets/Scenes/self-disclosure content/cat_interaction.unity
+    guid: 51caba96197ea6943be5644f4d21e79c
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 0
+    path: Assets/Scenes/Puppy0716.unity
+    guid: b41a6762c38bd8246aebbc592bbc2646
+  - enabled: 0
+    path: Assets/Scenes/Puppy0717.unity
+    guid: ff58d60f468a63a468b5aa79a4c91ff3
+  - enabled: 0
+    path: Assets/Scenes/Puppy0819.unity
+    guid: eca362874b12391488bf2821efc2139c
+  - enabled: 0
+    path: Assets/Scenes/dalmatian01.unity
+    guid: 27f71db9dfc52d34e9c48b1daf7589c2
+  - enabled: 0
+    path: Assets/Scenes/shibadog10.unity
+    guid: 71fe80cb26dc1814393bc1de750063a8
+  - enabled: 0
+    path: Assets/Scenes/shibadog.unity
+    guid: 6bee747ffb145b84291a2df26e4686ea
+  - enabled: 0
+    path: Assets/Scenes/dalmatian.unity
+    guid: 3623c9d50d5b50f43b450c5e6ae59e64
+  - enabled: 0
+    path: Assets/Scenes/self-disclosure content/tutorial.unity
+    guid: 92cd50cd22d5c544cb086e17f07cc1ac
+  - enabled: 0
+    path: Assets/Scenes/dalmatianbox.unity
+    guid: 47c45645fb5c24a4fa6a966617f89b60
+  - enabled: 1
+    path: Assets/Scenes/shibadogbox.unity
+    guid: da405015fa815e8479481b19a24d74d5
+  m_configObjects:
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2a662bbfc4f9e164399fad70ca2e1e42, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 14eba84ef9dd9b34c9800e205ca728f4, type: 2}
