@@ -7,6 +7,7 @@ public class FindBall : MonoBehaviour
     public Transform userTransform;
     private Vector3 currentTarget;
     public bool isMovingToUser = false;
+    //public Transform dogTransform;
     
     public GameObject dog; // 강아지 오브젝트
     public GameObject ballPrefab; // 공 프리팹
@@ -172,7 +173,7 @@ public class FindBall : MonoBehaviour
     {
         dogAnimator.SetBool("isRunning", true);
 
-        Vectir3 direction = target - userTransform.position;
+        Vector3 direction = target - userTransform.position;
         direction.y = 0f;
 
         float distance = direction.magnitude;
@@ -181,16 +182,16 @@ public class FindBall : MonoBehaviour
         {
             // user 방향으로 회전
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(tranform.rotation, targetRotation, rotationSpeed * Time.deltatTime);
+            dog.transform.rotation = Quaternion.Slerp(dog.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             // 전방 방향으로 이동
-            transform.position += transform.forward * moveSpeed * Time.deltatTime;
+            dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime;
 
             dogAnimator.SetBool("isRunning", true);
         }
         else
         {
-            RoataeTowradsUser();
+            RotateTowardsUser();
             dogAnimator.SetBool("isRunning", false);
         }
     }
@@ -199,13 +200,13 @@ public class FindBall : MonoBehaviour
     {
         Vector3 forward = new Vector3(user.forward.x, 0f, user.forward.z).normalized;
         Vector3 targetPos = user.position + forward * distance;
-        targetPos.y = transform.position.y;
+        targetPos.y = dog.transform.position.y;
         return targetPos;
     }
 
     private void RotateTowardsUser()
     {
-        Vector3 directionToUser = userTransform.position - transform.position;
+        Vector3 directionToUser = userTransform.position - dog.transform.position;
         directionToUser.y = 0f;
 
         // 너무 가까우면 무시하기
@@ -213,7 +214,7 @@ public class FindBall : MonoBehaviour
             return;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToUser);
-        transform.rotation = Quaternion.Slerp(userTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        dog.transform.rotation = Quaternion.Slerp(userTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
     }
 
