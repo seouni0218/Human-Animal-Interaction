@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FindBall : MonoBehaviour
 {
+    public Transform userTransform;
+    private Vector3 currentTarget;
+    public bool isMovingToUser = false;
+    
     public GameObject dog; // 강아지 오브젝트
     public GameObject ballPrefab; // 공 프리팹
     public GameObject targetObject; // 활성화할 게임 오브젝트
@@ -52,6 +56,9 @@ public class FindBall : MonoBehaviour
         initialPosition = dog.transform.position; 
         // 활성화할 오브젝트의 Mesh Renderer 비활성화
         targetObject.GetComponent<MeshRenderer>().enabled = false;
+
+        // user 현재 위치 저장
+        userTransform = Camera.main?.transform;
     }
 
     void Update()
@@ -78,9 +85,19 @@ public class FindBall : MonoBehaviour
         {
             MoveDogToBall();
         }
-        else if (isMoving)
+        else if (isMoving)  // ?
         {
             dogAnimator.ResetTrigger("isTouching");
+        }
+
+        if (isMovingToUser)
+        {
+            Vector3 targetPos = GetFloatingPositionInFrontOfUser(userTransform, 1.5f);
+            MoveTowards(targetPos);
+            return;
+            //isMovingToUser = true;
+            //dogAnimator.SetFloat("Speed", 1f);  // run으로 바꿔도 될듯
+            //dogAnimator.SetBool("isRunning", true);
         }
     }
 
@@ -125,8 +142,6 @@ public class FindBall : MonoBehaviour
 
         dogAnimator.SetBool("isTrotting", false);
 
-
-
         dogAnimator.SetBool("isRunning", true); // 회전이 끝나면 뛰기 애니메이션 시작
         dogAnimator.CrossFade("isRunning", 0.1f);
 
@@ -139,18 +154,67 @@ public class FindBall : MonoBehaviour
 
         dogAnimator.SetBool("isRunning", false);
 
-
-
         Debug.Log("Dog reached the ball.");
         Destroy(ballInstance); // 공 오브젝트 삭제
         ActivateTargetObject(); // 다른 게임 오브젝트의 Mesh Renderer 활성화
 
-        StartCoroutine(ReturnToStartPosition());
+        //StartCoroutine(ReturnToStartPosition());
+        isMovingToUser = true;
     }
 
     void ActivateTargetObject()
     {
         targetObject.GetComponent<MeshRenderer>().enabled = true;
+    }
+    
+    // 이걸 user가 현재 있는 위치로 돌아오게 하기
+    private void MoveTowards(Vector3 target)
+    {
+        dogAnimator.SetBool("isRunning", true);
+
+        Vectir3 direction = target - userTransform.position;
+        direction.y = 0f;
+
+        float distance = direction.magnitude;
+
+        if(distance>stopDistance)
+        {
+            // user 방향으로 회전
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(tranform.rotation, targetRotation, rotationSpeed * Time.deltatTime);
+
+            // 전방 방향으로 이동
+            transform.position += transform.forward * moveSpeed * Time.deltatTime;
+
+            dogAnimator.SetBool("isRunning", true);
+        }
+        else
+        {
+            RoataeTowradsUser();
+            dogAnimator.SetBool("isRunning", false);
+        }
+    }
+
+    private Vector3 GetFloatingPositionInFrontOfUser(Transform user, float distance=1.5f)
+    {
+        Vector3 forward = new Vector3(user.forward.x, 0f, user.forward.z).normalized;
+        Vector3 targetPos = user.position + forward * distance;
+        targetPos.y = transform.position.y;
+        return targetPos;
+    }
+
+    private void RotateTowardsUser()
+    {
+        Vector3 directionToUser = userTransform.position - transform.position;
+        directionToUser.y = 0f;
+
+        // 너무 가까우면 무시하기
+        if (directionToUser.sqrMagnitude < 0.01f)
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(directionToUser);
+        transform.rotation = Quaternion.Slerp(userTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
     }
 
     IEnumerator ReturnToStartPosition()
@@ -205,8 +269,6 @@ public class FindBall : MonoBehaviour
         //Destroy(ballInstance); // 공 오브젝트 삭제
 
         targetObject.GetComponent<MeshRenderer>().enabled = false; // targetObject 비활성화
-
-
 
         flag = false;
         isMoving = false;

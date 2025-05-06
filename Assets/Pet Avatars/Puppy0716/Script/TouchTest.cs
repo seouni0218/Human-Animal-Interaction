@@ -43,7 +43,28 @@ public class TouchTest : MonoBehaviour
 
     void LaunchBall()
     {
-        // 발사 힘을 최소값과 최대값 사이에서 랜덤하게 설정
+        // 일정 거리만큼만 날아가게 (pilot test 용)
+        float launchForce = 4f;
+        float angleInRadians = angle * Mathf.Deg2Rad;
+
+        // X-Z 평면 방향 랜덤 회전 (0~360도)
+        float randomYaw = Random.Range(0f, 360f);
+        Quaternion rotation = Quaternion.Euler(0, randomYaw, 0);
+
+        // 발사 벡터 (기준: Z방향으로 발사 후, 회전 적용)
+        Vector3 launchDirection = new Vector3(0, Mathf.Sin(angleInRadians), Mathf.Cos(angleInRadians));
+        Vector3 rotatedDirection = rotation * launchDirection;
+
+        Vector3 launchVelocity = rotatedDirection * launchForce;
+
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.velocity = launchVelocity;
+
+        Debug.Log($"발사 방향 각도(Y축 회전): {randomYaw}도");
+        isFlying = true;    // 비행 중으로 회전
+
+        /* // 발사 힘을 최소값과 최대값 사이에서 랜덤하게 설정
         float launchForce = Random.Range(minLaunchForce, maxLaunchForce);
         Debug.Log($"발사 힘 (랜덤): {launchForce}");
 
@@ -59,11 +80,10 @@ public class TouchTest : MonoBehaviour
         float angleOffsetInRadians = randomAngle * Mathf.Deg2Rad; 
         float launchVelocityX = launchForce * Mathf.Sin(angleOffsetInRadians);
 
-        /*
+        
         // 발사 방향 랜덤 결정: -1 (왼쪽), 0 (직진), 1 (오른쪽)
-        int randomDirection = Random.Range(-1, 2); // -1, 0, 1 중 하나를 선택
-        float launchVelocityX = randomDirection * launchForce * 0.5f; // x축 속도
-        */
+        //int randomDirection = Random.Range(-1, 2); // -1, 0, 1 중 하나를 선택
+        //float launchVelocityX = randomDirection * launchForce * 0.5f; // x축 속도
 
         //Vector3 launchVelocity = new Vector3(0, launchVelocityY, launchVelocityZ); // 초기 속도 벡터 설정
         Vector3 launchVelocity = new Vector3(launchVelocityX, launchVelocityY, launchVelocityZ); // 초기 속도 벡터 설정
@@ -72,6 +92,7 @@ public class TouchTest : MonoBehaviour
         //Debug.Log($"발사 방향: {randomDirection}, 속도: {launchVelocity}");
         Debug.Log($"발사 방향 (랜덤 각도): {randomAngle}도, 속도: {launchVelocity}");
         isFlying = true; // 비행 중으로 설정
+        */
     }
 
     void StopBall()

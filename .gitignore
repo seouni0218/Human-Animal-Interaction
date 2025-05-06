@@ -5,7 +5,11 @@
 [Bb]uilds/
 [Ll]ogs/
 UserSettings/
-Assets/
+Assets/Pet Avatars/Puppy/Puppy_Dalmatian/FBX/Anim
+Assets/Pet Avatars/Puppy0716/Asset/Dog_0819
+Assets/Pet Avatars/Puppy0716/Asset/new_dog
+Assets/Pet Avatars/Puppy0716/Asset/Realistic
+Assets/Pet Avatars/Domestic Animals(short)
 
 *.csproj
 *.unityproj
@@ -19,8 +23,6 @@ Assets/
 *.db
 *.resS
 *.zip
-*.fbx
-*.mp4
 *.ckpt
 
 .DS_Store
