@@ -80,6 +80,7 @@ public class DogMove : MonoBehaviour
         {
             RotateTowardsUser();
             animator.SetFloat("Speed", 0f);
+            isMovingToUser = false;
             //animator.SetTrigger("Sit");
         }
     }

@@ -701,7 +701,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 738786592}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &655669765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,6 +1311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72a673c805baa47a5840452da6789c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userTransform: {fileID: 655669764}
+  isMovingToUser: 0
   dog: {fileID: 935774719538852135}
   ballPrefab: {fileID: 1349818426935398269, guid: 9399e1630ae3c90439867feb6cdc6e87, type: 3}
   targetObject: {fileID: 7886395480771972569}

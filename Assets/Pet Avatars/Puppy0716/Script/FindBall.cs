@@ -30,6 +30,16 @@ public class FindBall : MonoBehaviour
 
     void Start()
     {
+        if (userTransform == null)
+        {
+            userTransform = Camera.main?.transform;
+
+            if (userTransform == null)
+            {
+                Debug.LogError("Main camera not found!");
+            }
+        }
+
         if (dog == null)
         {
             Debug.LogError("Dog object not assigned.");
@@ -94,8 +104,9 @@ public class FindBall : MonoBehaviour
         if (isMovingToUser)
         {
             Vector3 targetPos = GetFloatingPositionInFrontOfUser(userTransform, 1.5f);
+            Debug.Log(targetPos);//
             MoveTowards(targetPos);
-            return;
+            //return;
             //isMovingToUser = true;
             //dogAnimator.SetFloat("Speed", 1f);  // run으로 바꿔도 될듯
             //dogAnimator.SetBool("isRunning", true);
@@ -161,6 +172,9 @@ public class FindBall : MonoBehaviour
 
         //StartCoroutine(ReturnToStartPosition());
         isMovingToUser = true;
+        //Vector3 targetPos = GetFloatingPositionInFrontOfUser(userTransform, 1.5f);
+        //Debug.Log(targetPos);
+        //MoveTowards(targetPos);
     }
 
     void ActivateTargetObject()
@@ -173,8 +187,9 @@ public class FindBall : MonoBehaviour
     {
         dogAnimator.SetBool("isRunning", true);
 
-        Vector3 direction = target - userTransform.position;
-        direction.y = 0f;
+        Vector3 direction = target - dog.transform.position;
+        //Debug.Log(direction.x);
+        direction.y = dog.transform.position.y;
 
         float distance = direction.magnitude;
 
@@ -186,6 +201,7 @@ public class FindBall : MonoBehaviour
 
             // 전방 방향으로 이동
             dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime;
+            Debug.Log($"Target: {target}, Dog: {dog.transform.position}, Distance: {distance}");
 
             dogAnimator.SetBool("isRunning", true);
         }
@@ -207,7 +223,7 @@ public class FindBall : MonoBehaviour
     private void RotateTowardsUser()
     {
         Vector3 directionToUser = userTransform.position - dog.transform.position;
-        directionToUser.y = 0f;
+        directionToUser.y = dog.transform.position.y;
 
         // 너무 가까우면 무시하기
         if (directionToUser.sqrMagnitude < 0.01f)
