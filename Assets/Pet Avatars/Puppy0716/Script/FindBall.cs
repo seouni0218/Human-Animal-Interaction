@@ -64,12 +64,15 @@ public class FindBall : MonoBehaviour
         }
 
         // 강아지의 초기 위치 저장
-        initialPosition = dog.transform.position; 
+        //initialPosition = dog.transform.position; 
+        userTransform = Camera.main?.transform;
+        Vector3 targetPos = GetFloatingPositionInFrontOfUser(userTransform, 1.5f);
+        initialPosition = targetPos;
         // 활성화할 오브젝트의 Mesh Renderer 비활성화
         targetObject.GetComponent<MeshRenderer>().enabled = false;
 
         // user 현재 위치 저장
-        userTransform = Camera.main?.transform;
+        
     }
 
     void Update()
@@ -103,6 +106,8 @@ public class FindBall : MonoBehaviour
 
         if (isMovingToUser)
         {
+            //StartCoroutine(ReturnToStartPosition());
+            //return;
             Vector3 targetPos = GetFloatingPositionInFrontOfUser(userTransform, 1.5f);
             Debug.Log(targetPos);//
             MoveTowards(targetPos);
@@ -110,6 +115,7 @@ public class FindBall : MonoBehaviour
             //isMovingToUser = true;
             //dogAnimator.SetFloat("Speed", 1f);  // run으로 바꿔도 될듯
             //dogAnimator.SetBool("isRunning", true);
+
         }
     }
 
@@ -189,7 +195,7 @@ public class FindBall : MonoBehaviour
 
         Vector3 direction = target - dog.transform.position;
         //Debug.Log(direction.x);
-        direction.y = dog.transform.position.y;
+        direction.y = 0f;
 
         float distance = direction.magnitude;
 
@@ -197,18 +203,33 @@ public class FindBall : MonoBehaviour
         {
             // user 방향으로 회전
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            dog.transform.rotation = Quaternion.Slerp(dog.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            dog.transform.rotation = Quaternion.Slerp(dog.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime*100f);
 
             // 전방 방향으로 이동
-            dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime;
+            dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime * 100f;
             Debug.Log($"Target: {target}, Dog: {dog.transform.position}, Distance: {distance}");
 
             dogAnimator.SetBool("isRunning", true);
         }
         else
         {
-            RotateTowardsUser();
+            //RotateTowardsUser();
             dogAnimator.SetBool("isRunning", false);
+
+            // 특정 애니메이션 재생
+            dogAnimator.SetBool("isPlaying", true);
+
+            new WaitForSeconds(3.0f);
+            //yield return new WaitForSeconds(3.0f); // 애니메이션 실행 시간 대기 (예: 3초)
+
+            dogAnimator.SetBool("isPlaying", false); // 특정 애니메이션 중지
+
+            targetObject.GetComponent<MeshRenderer>().enabled = false; // targetObject 비활성화
+
+            flag = false;
+            isMoving = false;
+            isMovingToUser = false;
+            //return;
         }
     }
 
@@ -223,14 +244,14 @@ public class FindBall : MonoBehaviour
     private void RotateTowardsUser()
     {
         Vector3 directionToUser = userTransform.position - dog.transform.position;
-        directionToUser.y = dog.transform.position.y;
+        directionToUser.y = 0f;
 
         // 너무 가까우면 무시하기
         if (directionToUser.sqrMagnitude < 0.01f)
             return;
 
         Quaternion targetRotation = Quaternion.LookRotation(directionToUser);
-        dog.transform.rotation = Quaternion.Slerp(userTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        dog.transform.rotation = Quaternion.Slerp(userTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime*10f);
 
     }
 
@@ -244,8 +265,8 @@ public class FindBall : MonoBehaviour
         }
         */
 
-        dogAnimator.SetBool("isTrotting", true);
-        dogAnimator.CrossFade("isTrotting", 0.1f);
+        //dogAnimator.SetBool("isTrotting", true);
+        //dogAnimator.CrossFade("isTrotting", 0.1f);
 
         Vector3 direction = (initialPosition - dog.transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
@@ -253,21 +274,21 @@ public class FindBall : MonoBehaviour
         while (Quaternion.Angle(dog.transform.rotation, lookRotation) > 0.1f)
         {
             //dog.transform.rotation = Quaternion.Slerp(dog.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed * 100f);
-            dog.transform.rotation = Quaternion.Lerp(dog.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed * 100f);
+            dog.transform.rotation = Quaternion.Lerp(dog.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed * 10f);
             yield return null; // 다음 프레임까지 대기
         }
 
-        dogAnimator.SetBool("isTrotting", false);
+        //dogAnimator.SetBool("isTrotting", false);
 
 
-
-        dogAnimator.SetBool("isRunning", true); // 회전 후 이동
-        dogAnimator.CrossFade("isRunning", 0.1f);
+        dogAnimator.SetBool("isRunning", true);
+        //dogAnimator.SetBool("isRunning", true); // 회전 후 이동
+        //dogAnimator.CrossFade("isRunning", 0.1f);
 
         while (Vector3.Distance(dog.transform.position, initialPosition) > stopDistance)
         {
-            dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime * 100f;
-            yield return null; // 다음 프레임까지 대기
+            dog.transform.position += dog.transform.forward * moveSpeed * Time.deltaTime * 5f;
+            //yield return null; // 다음 프레임까지 대기
         }
 
         dogAnimator.SetBool("isRunning", false); // 뛰기 애니메이션 중지

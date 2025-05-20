@@ -495,7 +495,8 @@ MonoBehaviour:
   voiceRequiresFocus: 1
   profiles:
   - Target: {fileID: 0}
-    Themes: []
+    Themes:
+    - {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1213,7 +1214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf72a673c805baa47a5840452da6789c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userTransform: {fileID: 0}
+  userTransform: {fileID: 655669764}
   isMovingToUser: 0
   dog: {fileID: 2615690711354928612}
   ballPrefab: {fileID: 1349818426935398269, guid: 9399e1630ae3c90439867feb6cdc6e87, type: 3}
@@ -1549,7 +1550,8 @@ MonoBehaviour:
   voiceRequiresFocus: 1
   profiles:
   - Target: {fileID: 0}
-    Themes: []
+    Themes:
+    - {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2528,7 +2530,8 @@ MonoBehaviour:
   voiceRequiresFocus: 1
   profiles:
   - Target: {fileID: 0}
-    Themes: []
+    Themes:
+    - {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -3222,8 +3225,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2615690711354928612}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: -0.247, z: 1.188}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 0.473, y: -0.247, z: 1.188}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1376548172786246183}
@@ -3664,7 +3667,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2180419118946312673}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.076, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4865,11 +4868,11 @@ MonoBehaviour:
   animator: {fileID: 8784043130469281060}
   wanderRadius: 5
   wanderTimer: 3
-  moveSpeed: 0.1
-  restChance: 0.1
-  restDuration: 30
+  moveSpeed: 0.4
+  restChance: 0.2
+  restDuration: 8
   stopDistance: 0.5
-  rotationSpeed: 1.5
+  rotationSpeed: 2
   isNameCalled: 0
   userTransform: {fileID: 655669764}
 --- !u!114 &8784043130469281077
