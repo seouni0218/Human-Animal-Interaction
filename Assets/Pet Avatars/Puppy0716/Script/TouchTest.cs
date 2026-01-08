@@ -67,7 +67,7 @@ public class TouchTest : MonoBehaviour
 
         //Vector3 launchVelocity = new Vector3(0, launchVelocityY, launchVelocityZ); // 초기 속도 벡터 설정
         Vector3 launchVelocity = new Vector3(launchVelocityX, launchVelocityY, launchVelocityZ); // 초기 속도 벡터 설정
-        rb.velocity = launchVelocity; // 리지드바디에 초기 속도 적용
+        rb.linearVelocity = launchVelocity; // 리지드바디에 초기 속도 적용
 
         //Debug.Log($"발사 방향: {randomDirection}, 속도: {launchVelocity}");
         Debug.Log($"발사 방향 (랜덤 각도): {randomAngle}도, 속도: {launchVelocity}");
@@ -79,7 +79,7 @@ public class TouchTest : MonoBehaviour
         Debug.Log("공 멈춤 테스트");
         rb.isKinematic = true; // y축 값이 0가 되면 멈추게 설정
         rb.useGravity = false; // 중력을 비활성화
-        rb.velocity = Vector3.zero; // 속도를 0으로 설정
+        rb.linearVelocity = Vector3.zero; // 속도를 0으로 설정
         isFlying = false; // 비행 상태 해제
     }
 }

@@ -21,7 +21,7 @@ public class ThrowBall : MonoBehaviour
         if (!isThrown)
         {
             isThrown = true;
-            rb.velocity = new Vector3(0, throwSpeed, throwSpeed);
+            rb.linearVelocity = new Vector3(0, throwSpeed, throwSpeed);
         }
         else if (transform.position.y <= 0f)
         {
@@ -31,7 +31,7 @@ public class ThrowBall : MonoBehaviour
 
     private void StopAtGround()
     {
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
         rb.isKinematic = true;
         isThrown = false; // Reset to allow re-throwing if necessary
     }
