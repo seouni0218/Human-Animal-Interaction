@@ -44,10 +44,10 @@ public class Eating : MonoBehaviour
             }
             else if (isEatingStarted)
             {
-                CheckAndDisableMeshRenderer(3f, food1MeshRenderer);
-                CheckAndDisableMeshRenderer(4f, food2MeshRenderer);
-                CheckAndDisableMeshRenderer(5f, food3MeshRenderer);
-                CheckAndDisableMeshRenderer(6f, otherMeshRenderer); // 마지막 오브젝트
+                CheckAndDisableMeshRenderer(5f, food1MeshRenderer);
+                CheckAndDisableMeshRenderer(6f, food2MeshRenderer);
+                CheckAndDisableMeshRenderer(7f, food3MeshRenderer);
+                CheckAndDisableMeshRenderer(8f, otherMeshRenderer); // 마지막 오브젝트
                 
             }
         }
